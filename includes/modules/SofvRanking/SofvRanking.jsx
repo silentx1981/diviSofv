@@ -5,19 +5,19 @@ import React, { Component } from 'react';
 import './style.css';
 
 
-class HelloWorld extends Component {
+class SofvRanking extends Component {
 
-  static slug = 'divi_hello_world';
+  static slug = 'sofv_sofv_ranking';
 
   render() {
     const Content = this.props.content;
 
     return (
-      <h1>
+      <h1>x
         <Content/>
       </h1>
     );
   }
 }
 
-export default HelloWorld;
+export default SofvRanking;
