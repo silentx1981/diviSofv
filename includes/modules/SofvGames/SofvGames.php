@@ -1,6 +1,9 @@
 <?php
+echo "<br><br><br><br><br>---";
 
-include_once(WP_PLUGIN_DIR.'/divi_sofv/src/sofv/Games.php');
+require_once(WP_PLUGIN_DIR.'/divi_sofv/vendor/autoload.php');
+
+use Silentx\Sofv;
 
 class SOFV_SofvGames extends ET_Builder_Module {
 
@@ -11,7 +14,7 @@ class SOFV_SofvGames extends ET_Builder_Module {
 	protected $module_credits = array(
 		'module_uri' => 'https://wyssinet.ch/diviSofv',
 		'author'     => 'Raffael Wyss',
-		'author_uri' => 'https://wyssinet.ch',
+		'author_uri' => 'https://wyssinet.ch',f
 	);
 
 	public function init() {
@@ -32,9 +35,9 @@ class SOFV_SofvGames extends ET_Builder_Module {
 
 	public function render( $attrs, $content = null, $render_slug ) {
 
-		$games = new sofvGames();
+		$games = new Sofv\Games();
 
-		return $this->content = '<div>'.$games->getGames().'</div>';
+		return $this->content = '<div>'.$games->getCurrentGames().'</div>';
 	}
 }
 
