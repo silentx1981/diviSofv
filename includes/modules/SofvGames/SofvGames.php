@@ -35,10 +35,19 @@ class SOFV_SofvGames extends ET_Builder_Module {
 
 	public function render( $attrs, $content = null, $render_slug ) {
 
-		$games = new Sofv\Games();
+		$url = "https://www.sofv.ch/solothurner-fussballverband/vereine-sofv/verein-sofv.aspx/v-1831/a-as/";
+		$games = new Sofv\Games($url);
+		echo "<pre>";
+		print_r($games->getCurrentGames());
+		echo "</pre>";
 
-		return $this->content = '<div>'.$games->getCurrentGames().'</div>';
+		$page = '<div>';
+		$page .= print_r($games->getCurrentGames());
+		$page .= '</div>';
+
+
+		return $this->content = $page;
 	}
 }
 
-new SOFV_SofvGames;
+new SOFV_SofvGames();
