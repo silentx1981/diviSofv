@@ -5,6 +5,7 @@
   .header {
     background-color: #cccccc;
     font-weight: bold;
+    text-align: center;
 
     width: 100%;
     padding: 5px;
@@ -16,10 +17,11 @@
   }
 
   .body {
+    overflow: hidden;
     background-color: #FFFFFF;
 
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     border-style: solid;
     border-color: #000000;
     border-width: 0 1px 1px 1px;
@@ -29,13 +31,65 @@
         background-color: #446688;
         color: #ffffff;
         width: 100%;
-        padding: 5px;
+        padding: 10px;
         border-radius: 4px;
+        text-align: center;
     }
 
     .status {
         color: #ff0000;
+        padding: 15px;
+    }
+
+    .time {
         padding: 5px;
+        margin-bottom: 10px;
+        height: 40px;
+        overflow: hidden;
+
+        .icon {
+            display: inline-block;
+            vertical-align: middle;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            color: #446688;
+            line-height: 40px;
+        }
+
+        .text {
+            display: inline-block;
+            vertical-align: middle;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #446688;
+            line-height: 40px;
+        }
+
+    }
+
+    .team {
+        padding: 10px;
+        width: 100%;
+        min-height: 15px;
+        overflow: hidden;
+
+        .name {
+            float: left;
+            vertical-align: middle;
+            line-height: 15px;
+        }
+
+        .home {
+            font-weight: bold;
+            color: #446688;
+        }
+
+        .result {
+            float: right;
+            vertical-align: middle;
+            line-height: 15px;
+        }
     }
   }
 

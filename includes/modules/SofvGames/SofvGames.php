@@ -54,31 +54,45 @@ class SOFV_SofvGames extends ET_Builder_Module {
 
 	private function renderGame($game)
 	{
+
+		if ($game['status'])
+			$status = '	<div class="status">
+							<i class="fas fa-exclamation-triangle"></i> '.$game['status'].'
+						</div>';
+		if ($game['hometeam'] === 'teamA')
+			$game['homeA'] = 'home';
+		if ($game['hometeam'] === 'teamB')
+			$game['homeB'] = 'home';
+
+
 		$result = '	<div class="game">
 						<div class="type">
 							'.$game['type'].'
 						</div>
-						<div class="status">
-							'.$game['status'].'
-						</div>
+						'.($status ?? null).'
 						<div class="time">
-							'.$game['date']->format('H:i').'
+							<div class="icon">
+								<i class="far fa-2x fa-clock"></i>
+							</div>
+							<div class="text">
+								'.$game['date']->format('H:i').'
+							</div>
 						</div>
-						<div class="teamA">
-							<div class="name">
+						<div class="team">
+							<div class="name '.($game['homeA'] ?? null).'">
 								'.$game['teamA'].'
 							</div>
 							<div class="result">
 								'.$game['resultA'].'
 							</div>
 						</div>
-						<div class="teamB">
-							<div class="name">
+						<div class="team">
+							<p class="name '.($game['homeB'] ?? null).'">
 								'.$game['teamB'].'
-							</div>
-							<div class="result">
+							</p>
+							<p class="result">
 								'.$game['resultB'].'
-							</div>
+							</p>
 						</div>
 					</div>';
 
@@ -91,8 +105,11 @@ class SOFV_SofvGames extends ET_Builder_Module {
 		$date = new DateTime($gamedaykey, $this->timezone);
 		$headerText = $date->format('l d.m.Y');
 		$bodyText = '';
-		foreach ($gameday as $game)
+		foreach ($gameday as $key => $game) {
 			$bodyText .= $this->renderGame($game);
+			if (isset($gameday[$key + 1]))
+				$bodyText .= '<hr>';
+		}
 		$result =   '<div class="sofvGameDays">
 						<div class="header">
 							'.$headerText.'
@@ -106,10 +123,16 @@ class SOFV_SofvGames extends ET_Builder_Module {
 
 	private function renderGridDay($gamedays)
 	{
-		$result = '';
+		$content = '';
 		foreach ($gamedays as $gamedaykey => $gameday) {
-			$result .= $this->renderGameDay($gamedaykey, $gameday);
+			$content .= '<div>';
+			$content .= $this->renderGameDay($gamedaykey, $gameday);
+			$content .= '</div>';
 		}
+
+		$result = '	<div class="sofvGameGrid">
+						'.$content.'
+					</div>';
 
 		return $result;
 	}
