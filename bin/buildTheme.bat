@@ -1,0 +1,1 @@
+sass .\scss\SofvGames\SofvGames.scss > .\includes\modules\SofvGames\style.css

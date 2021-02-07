@@ -15,8 +15,8 @@ class Games
 		'date'       => '',
 		'teamA'      => '',
 		'teamB'      => '',
-		'resultA'    => '',
-		'resultB'    => '',
+		'resultA'    => '99',
+		'resultB'    => '99',
 		'status'     => '',
 		'type'       => '',
 		'gamenumber' => '',
@@ -30,10 +30,36 @@ class Games
 		$this->timezone = new DateTimeZone(wp_timezone_string());
 	}
 
+	public function getGames(string $mode = 'current', string $groupBy = 'day')
+	{
+		$result = [];
+		if ($mode === 'current')
+			$result = $this->getCurrentGames();
+		if ($groupBy === 'day')
+			$result = $this->groupByDay($result);
 
-	public function getCurrentGames()
+		return $result;
+	}
+
+
+	private function getCurrentGames()
 	{
 		return $this->parseUrlData();
+	}
+
+	private function groupByDay($games)
+	{
+		$result = [];
+		foreach ($games as $game) {
+			/** @var DateTime $date */
+			$date = clone $game['date'];
+			$daykey = $date->format('Y-m-d');
+			if (!isset($result[$daykey]))
+				$result[$daykey] = [];
+			$result[$daykey][] = $game;
+		}
+
+		return $result;
 	}
 
 	private function parseUrlData()
@@ -75,15 +101,16 @@ class Games
 		$result = $data;
 
 		if (mb_strpos($class, 'list-group-item sppTitel') !== false) {
-			$datum = new DateTime(strtotime($element->nodeValue), $this->timezone);
-			$datum->setTime(0, 0, 0);
+			$dateValue = explode('.', mb_substr($element->nodeValue, 3));
+			$dateValue = new DateTime($dateValue[2]."-".$dateValue[1]."-".$dateValue[0], $this->timezone);
+			$dateValue->setTime(0, 0, 0);
 			$result[] = $this->prototypeGame;
-			$result[count($result) -1]['date'] = $datum;
+			$result[count($result) -1]['date'] = $dateValue;
 		} else if (mb_strpos($class, 'col-md-1 time col-xs-12') !== false) {
-			/** @var DateTime $datum */
-			$datum = $result[count($result) -1]['date'];
+			/** @var DateTime $date */
+			$date = $result[count($result) -1]['date'];
 			$timeEx = explode(":", $element->nodeValue);
-			$datum->setTime($timeEx[0], $timeEx[1]);
+			$date->setTime($timeEx[0], $timeEx[1]);
 		} else if (mb_strpos($class, 'col-md-5 col-xs-12 teamA') !== false) {
 			$result[count($result) -1]['teamA'] = $element->nodeValue;
 			if (mb_strpos($class, 'tabMyTeam') !== false)

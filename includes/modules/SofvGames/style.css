@@ -1,3 +1,33 @@
-.divi_hello_world1 {
-
+.sofvGameDays {
+  padding: 5px;
+}
+.sofvGameDays .header {
+  background-color: #cccccc;
+  font-weight: bold;
+  width: 100%;
+  padding: 5px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 1px 1px 0 1px;
+  border-radius: 4px 4px 0 0;
+}
+.sofvGameDays .body {
+  background-color: #FFFFFF;
+  width: 100%;
+  padding: 5px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 0 1px 1px 1px;
+  border-radius: 0 0 4px 4px;
+}
+.sofvGameDays .body .type {
+  background-color: #446688;
+  color: #ffffff;
+  width: 100%;
+  padding: 5px;
+  border-radius: 4px;
+}
+.sofvGameDays .body .status {
+  color: #ff0000;
+  padding: 5px;
 }
